@@ -33,6 +33,7 @@ test_loader = torch.utils.data.DataLoader(
 examples = enumerate(test_loader)
 batch_idx, (example_data, example_targets) = next(examples)
 print(example_data.shape)
+print(example_targets.shape)
 
 import matplotlib.pyplot as plt
 
@@ -51,3 +52,28 @@ for i in range(6):
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
+
+class Net(nn.Module):
+  def __init__(self):
+    super(Net, self).__init__()
+    self.fc1 = nn.Linear(320, 50)
+    self.fc2 = nn.Linear(50, 10)
+    self.params = nn.ParameterList([nn.Parameter(torch.zeros(1, dtype=torch.bool), requires_grad=False)])
+  
+  def forward(self, x):
+    x = F.log_softmax(self.fc1(x), dim=1)
+    x = F.log_softmax(self.fc2(x), dim=1)
+    self.params[0].data = torch.logical_not(self.params[0].data)
+    print(self.params[0].data)
+    print(x.shape)
+    return x
+
+model = Net()
+print(model)
+
+# Try one forward pass
+model.forward(example_data.view(-1, 320))
+model.forward(example_data.view(-1, 320))
+model.forward(example_data.view(-1, 320))
+
+print(model)
