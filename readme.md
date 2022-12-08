@@ -1,5 +1,7 @@
 # Forward Forward algorithm implemented with pytorch
 
+Forward Forward algorithm (by Geoffrey Hinton) implemented with pytorch.
+
 ## Install
 - Install [python 3.8](https://www.python.org/downloads/) (I used python 3.9.6)
 - Install [pytorch](https://pytorch.org/get-started/locally/) (I used pytorch 1.13.0)
